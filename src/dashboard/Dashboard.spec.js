@@ -21,4 +21,10 @@ describe('<Dashboard />', () => {
             // expect(queryByText(/display/i)).toBeTruthy();
             // expect(queryByText(/controls/i)).toBeTruthy();
       })
+
+      it('should default to unlock and open', () => {
+            const { getByText } = render(<Dashboard />);
+            getByText(/unlocked/i)
+            getByText(/open/i)
+      })
 });
