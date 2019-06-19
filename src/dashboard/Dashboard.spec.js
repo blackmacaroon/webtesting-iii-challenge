@@ -4,8 +4,6 @@ import { render } from '@testing-library/react';
 import '@testing-library/react/cleanup-after-each';
 
 import Dashboard from './Dashboard.js';
-import { exportAllDeclaration } from '@babel/types';
-import Controls from '../controls/Controls.js';
 
 describe('<Dashboard />', () => {
       it('should render the dashboard component without error', () => {
