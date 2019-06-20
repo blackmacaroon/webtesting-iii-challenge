@@ -5,9 +5,12 @@ import { render } from '@testing-library/react';
 import '@testing-library/react/cleanup-after-each';
 
 import Display from './Display';
+import Dashboard from '../dashboard/Dashboard';
+import { fireEvent } from '@testing-library/react/dist';
 
 
 describe('<Display />', () => {
+      
       it('should render the display component without errors', () => {
             render(<Display />)
       });
@@ -35,4 +38,40 @@ describe('<Display />', () => {
             const status = getByText(/unlocked/i);
             expect(status).toBeTruthy();
       });
+
+      it('should have the corresponding color class and status AND disabled status when applicable', () => {
+            const { getByTestId } = render(<Dashboard/>)
+            const lock = getByTestId('lockTest')
+            const gate = getByTestId('closedTest')
+
+            expect(lock).toHaveClass('green-led')
+            expect(gate).toHaveClass('green-led')
+            expect(getByTestId('lockButt')).toBeDisabled();
+
+            fireEvent.click(getByTestId('knobButt'))
+
+            expect(lock).toHaveClass('green-led')
+            expect(gate).toHaveClass('red-led')
+
+            fireEvent.click(getByTestId('knobButt'))
+
+            expect(lock).toHaveClass('green-led')
+            expect(gate).toHaveClass('green-led')
+            expect(getByTestId('lockButt')).toBeDisabled();
+
+            fireEvent.click(getByTestId('knobButt'))
+
+            expect(lock).toHaveClass('green-led')
+            expect(gate).toHaveClass('red-led')
+
+            fireEvent.click(getByTestId('lockButt'))
+
+            expect(lock).toHaveClass('red-led')
+            expect(gate).toHaveClass('red-led')
+            expect(getByTestId('knobButt')).toBeDisabled();
+
+            
+
+
+      })
 })

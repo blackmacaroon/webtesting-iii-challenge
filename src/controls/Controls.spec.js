@@ -1,6 +1,6 @@
 import React from 'react';
 import "jest-dom/extend-expect"; 
-import renderer from 'react-test-renderer';
+// import renderer from 'react-test-renderer';
 import { render, fireEvent } from '@testing-library/react';
 import '@testing-library/react/cleanup-after-each';
 
@@ -43,6 +43,32 @@ describe('<Controls />', () => {
                   await fireEvent.click(toggle)
                   //button changes to close
                   getByText(/close gate/i)
+            })
+      })
+
+      describe('lock/unlock toggle', () => {
+            it('should lock, from initial unlocked state, when button is clicked', async () => {
+                  //gate is unlocked so button should say 'lock'
+                  const { getByText } = render(<Dashboard />)
+                  const toggle = getByText(/lock gate/i)
+                  // lock the gate
+                  await fireEvent.click(toggle)
+                  //button changes to unlock
+                  getByText(/unlock/i)
+                  
+            })
+            it('should unlock after locking', async () => {
+                  const { getByText } = render(<Dashboard />)
+                  const toggle = getByText(/lock gate/i)
+                  //locks the gate
+                  await fireEvent.click(toggle)
+                  //button changes to unlock
+                  getByText(/unlock/i)
+                  //unlocks the gate
+                  await fireEvent.click(toggle)
+                  //button changes to lock
+                  getByText(/lock gate/i)
+
             })
       })
 
